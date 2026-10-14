@@ -19,3 +19,13 @@ const {prepareUtilisateur}=require ("./UtilisateursControllers");
         res.status(500).json({ message: error.message });
     }
 };
+exports.getAllPatient=async(req,res)=>{
+         try{
+             const patient=await Patient.find();
+             
+             res.status(200).json(patient);
+     
+         }catch(erreur){
+             res.status(500).json({message:erreur.message});
+         }}
+

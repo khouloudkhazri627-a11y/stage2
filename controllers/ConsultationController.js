@@ -24,7 +24,8 @@ exports.createConsultation=async(req,res)=>{
      };
      exports.getAllConsultation=async(req,res)=>{
          try{
-             const consultation=await Consultation.find();
+             const consultation=await Consultation.find().populate({path:"patient", select: "nom prenom"})
+             .populate({path:"symptome", select: "description"});
              
              res.status(200).json(consultation);
      
@@ -52,4 +53,43 @@ exports.createConsultation=async(req,res)=>{
          
 
 
-         
+   exports.getAllConsultationByIdMedecin=async(req,res)=>{
+    try{
+             const consultation=await Consultation.find({medecin:req.params.id}).populate({
+                path:"patient",select:"nom prenom"})
+                .populate({path:"symptome",select:"description"});
+
+             
+             res.status(200).json(consultation);
+     
+         }catch(erreur){
+             res.status(500).json({message:erreur.message});
+         }};
+
+
+     exports.getPatientsByMedecin = async (req, res) => {
+    try {
+        const consultations = await Consultation.find({
+            medecin: req.params.idMedecin
+        }).populate({
+            path: "patient",select:"nom prenom telephone adresse"
+        });
+
+        console.log("Consultations trouvées :", consultations);
+        // Éviter les doublons : un patient peut avoir plusieurs consultations
+        const patients = [
+            ...new Map(
+                consultations
+                    .filter(c => c.patient)
+                    .map(c => [c.patient._id.toString(), c.patient])
+            ).values()
+        ];
+
+        res.status(200).json(patients);
+
+    } catch (erreur) {
+        res.status(500).json({
+            message: erreur.message
+        });
+    }
+};

@@ -33,4 +33,12 @@ exports.createSymptome=async(req,res)=>{
          }}
 
 
-         exports.getSymptomesByIdPatient
+         exports.getSymptomesByIdPatient=async(req,res)=>{
+            try{
+                const symptome=await Symptome.find({patient:req.params.id});
+                
+                res.status(200).json(symptome);
+            }catch(erreur){
+                res.status(500).json({message:erreur.message});
+            }
+        }

@@ -8,7 +8,7 @@ const recommandationSchema=new mongoose.Schema({
         required:true
     },
     medecin:{
-        type:mongoose.Schema.Types.ObejectId,
+        type:mongoose.Schema.Types.ObjectId,
         ref:"Medecin",
         required:true
     },

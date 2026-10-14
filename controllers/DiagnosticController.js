@@ -24,7 +24,17 @@ exports.createDiagnostic=async(req,res)=>{
      };
      exports.getAllDiagnostic=async(req,res)=>{
          try{
-             const diagnostic=await Diagnostic.find();
+             const diagnostic=await Diagnostic.find().populate([
+                {
+                    path:"symptome",
+                select:"nom description niveauGravite"
+                },
+                {
+                    path:"patient",
+                    select:"nom prenom"
+                }
+             ]
+             );
              
              res.status(200).json(diagnostic);
      

@@ -97,3 +97,29 @@ exports.supprimerRendezVous = async (req, res) => {
     }
 };
 
+exports.getRendezVousByIdMedecin = async (req, res) => {
+    try {
+        const rendezVous = await RendezVous.find({ medecin: req.params.id });
+
+        res.status(200).json(rendezVous);
+    } catch (error) {
+        res.status(500).json({
+            message: "Erreur lors de la récupération des rendez-vous du médecin",
+            error: error.message
+        })
+        
+    }
+};
+exports.getRendezVousByIdPatient= async (req, res) => {
+    try {
+        const rendezVous = await RendezVous.find({ patient: req.params.id });
+
+        res.status(200).json(rendezVous);
+    } catch (error) {
+        res.status(500).json({
+            message: "Erreur lors de la récupération des rendez-vous du patient",
+            error: error.message
+        })
+        
+    }
+};

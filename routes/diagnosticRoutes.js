@@ -1,12 +1,13 @@
 const express = require('express');
 const router = express.Router();
-
+const auth=require('../middlewares/authMiddleware');
+const role=require('../middlewares/roleMiddleware');
 const { createDiagnostic, updateDiagnostic,getAllDiagnostic}= require("../controllers/DiagnosticController");
 
 
-router.post('/', createDiagnostic);
-router.put('/:id',updateDiagnostic );
+router.post('/',auth,role("medecin"), createDiagnostic);
+router.put('/:id',auth,role("medecin"), updateDiagnostic );
 
-router.get('/', getAllDiagnostic);
+router.get('/', auth,role("admin"),getAllDiagnostic);
 
 module.exports = router;

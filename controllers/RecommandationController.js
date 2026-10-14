@@ -4,6 +4,7 @@ const Recommandation = require("../models/Recommandation");
 exports.createRecommandation = async (req, res) => {
     try {
         const recommandation = new Recommandation(req.body);
+        recommandation.daterecommandation = new Date(); // Définir la date de recommandation à la date actuelle
         const recommandationsaved = await recommandation.save();
 
         res.status(201).json(recommandationsaved);
@@ -77,3 +78,14 @@ exports.deleteRecommandation = async (req, res) => {
         res.status(500).json({ message: error.message });
     }
 };
+exports.getRecomandationByIdmedecin=async(req,res)=>{
+    try{
+        const recommandation=await Recommandation.find({medecin:req.params.idMedecin}).populate({
+            path:"consultation", select:"observations", 
+            populate:{path:"patient",select:"nom prenom"}
+        });
+        res.status(200).json(recommandation);
+    }catch(erreur){
+        res.status(500).json({message:erreur.message});
+    }
+}

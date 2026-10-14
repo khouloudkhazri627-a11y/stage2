@@ -18,5 +18,5 @@ const maladieSchema=new mongoose.Schema({
  });
 
 
-const Maladie = Symptome.discriminator("Maladie", maladieSchema); 
+const Maladie = mongoose.model("Maladie", maladieSchema); 
 module.exports = Maladie;

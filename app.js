@@ -8,7 +8,7 @@ const adminRoutes=require('./routes/adminRoutes');
 const symptomeRoutes=require('./routes/symptomeRoutes');
 const maladieRoutes=require('./routes/maladieRoutes');
 const diagnosticRoutes=require('./routes/diagnosticRoutes');
-
+const authentificationRoutes=require('./routes/authentificationRoutes');
 const rendezvousRoutes=require('./routes/rendezvousRoutes');
 
 const consultationRoutes=require('./routes/consultationRoutes');
@@ -34,6 +34,6 @@ app.use('/maladies', maladieRoutes);
 app.use('/rendezvouss', rendezvousRoutes); 
 app.use('/consultations', consultationRoutes); 
 app.use('/recommandations', recommandationRoutes); 
-
+app.use('/auth', authentificationRoutes);
 
 module.exports = app; //Exportation de l'app pour pouvoir l'utiliser dans d'autres fichiers
